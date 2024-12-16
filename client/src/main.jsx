@@ -7,6 +7,9 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Auth from './pages/Auth'
 import Home from './pages/Home'
 import Products from './components/Products'
+import Sell from './pages/Sell'
+import Dashboard from './pages/Dashboard'
+import About from './pages/About'
 const data=[
   {
     "name": "Burger",
@@ -78,7 +81,9 @@ createRoot(document.getElementById('root')).render(
       <Route path="/fresh" element={<Products title="Fresh" data={data}/>}/>
       <Route path="/local" element={<Products title="Local" data={data}/>}/>
       <Route path="/farmers" element={<Products title="Farmers" data={data}/>}/>
-      <Route path="/about" element={<h1>About page</h1>}/>
+      <Route path="/about" element={<About/>}/>
+      <Route path="/sell" element={<Sell/>}/>
+      <Route path="/dashboard" element={<Dashboard/>}/>
     </Routes>
   </BrowserRouter>
 )
