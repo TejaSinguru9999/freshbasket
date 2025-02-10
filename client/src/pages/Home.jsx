@@ -1,11 +1,19 @@
-import React from 'react'
-
+import React, { useContext } from 'react'
+import {Link} from "react-router-dom"
+import { Context } from '../context/Contextapi'
 function Hero() {
+  const {user} = useContext(Context)
   return <div className='w-full h-[88vh] flex'>
     <div className='textContainer w-[50%] h-full flex items-center justify-center flex-col px-4 bg-[#0f0f0f]'>
       <h2 className='text-7xl font-bold text-green-700'>SAVE THE WORLD</h2>
       <p className='text-4xl my-5 text-white'>Plant Trees In Your Surroundings...</p>
-      <a href='#learn' className='bg-white p-2 rounded-md'>Learn More...</a>
+      {user ? <div className='flex gap-5 my-5'>
+      <Link to="/fresh" className='bg-black border-white border-2 text-white hover:bg-white hover:text-black p-2 rounded-md'>Shop fresh</Link>
+      <Link to="/local" className='bg-black border-white border-2 text-white hover:bg-white hover:text-black p-2 rounded-md'>Shop from local</Link>
+      <Link to="/farmers" className='bg-black border-white border-2 text-white hover:bg-white hover:text-black p-2 rounded-md'>Shop from farmers</Link>
+        </div>
+      : <Link to="/auth" className='bg-white p-2 rounded-md'>Sign in now</Link> }
+      
     </div>
     <div className='imgContainer w-[50%] bg-[#0f0f0f]'>
       <img className='heroImage w-full h-full' src='/assets/hero.jpg' alt='hero image' />
@@ -18,7 +26,7 @@ function Home() {
   return (
     <div className='w-full'>
       <Hero />
-      <div id='learn' className='w-full p-5'>
+      <div id='learn' className='w-full h-[88vh] p-5 pt-10'>
         <h2 className='text-center text-3xl mb-4'>what is <span className='text-green-700 font-semibold'>FreshBasket</span> ?</h2>
         <p className="text-xl text-gray-600 text-center mb-4">
           Welcome to <span className="text-green-700">FreshBasket</span>, your go-to platform for buying and selling <span className="text-green-700">fresh</span> and sustainable food directly from local farmers and communities.

@@ -13,6 +13,9 @@
 
 .authContainer {
   background-image: url("/assets/authBg.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: bottom;
 }
 @keyframes heroTxtRight {
   0% {
@@ -64,6 +67,9 @@ box-shadow: 0 8px 32px 0 rgba(45, 45, 46, 0.842);
     gap: 2.5rem;
     grid-template-columns: repeat(auto-fill, minmax(23rem, 1fr));
 }
+.productContainer{
+  box-shadow: rgba(255, 255, 255, 0.1) 0px 1px 1px 0px inset, rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+}
 .productImgContainer img {
   transition: all linear 0.3s;
   transform: scale(1);
@@ -89,4 +95,8 @@ box-shadow: 0 8px 32px 0 rgba(45, 45, 46, 0.842);
   border: 8px solid;
   border-color: #15803d #0000;
   animation: l1 1s infinite;
+}
+
+.productBtn:active{
+  scale: 1.1;
 }

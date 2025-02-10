@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const SellerSchema = new mongoose.Schema({
+const UserSchema = new mongoose.Schema({
     gmail:String,
     password:String,
     doorNo:String,
@@ -9,6 +9,7 @@ const SellerSchema = new mongoose.Schema({
     district:String,
     state:String,
     pincode:Number,
-    role:String
+    role:String,
+    products:Array
 });
-export const SellerRegisterSchema = mongoose.model("Seller",SellerSchema);
+export const User = mongoose.model("User",UserSchema);

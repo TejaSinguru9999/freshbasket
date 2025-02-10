@@ -1,16 +1,10 @@
-import { BuyerRegisterSchema } from "../models/buyer.js";
-import { SellerRegisterSchema } from "../models/seller.js";
+import { User } from "../models/user.js";
 import bcrypt from "bcryptjs";
 
 const LoginController = async (req, res) => {
     const { gmail, password } = req.body;
     try {
-        let existingUser = null;
-        existingUser = await BuyerRegisterSchema.findOne({ gmail: gmail });
-        console.log(existingUser)
-        if(!existingUser){
-            existingUser = await SellerRegisterSchema.findOne({ gmail: gmail });
-        }
+        const existingUser = await User.findOne({ gmail: gmail });
         if (!existingUser) {
             throw new Error("No user found, please register.")
         }

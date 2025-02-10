@@ -4,6 +4,7 @@ import connectDb from './db/connect.js';
 import cors from "cors";
 
 import UserRouter from './routers/user.js';
+import ProductRouter from './routers/product.js';
 
 dotenv.config()
 
@@ -14,9 +15,11 @@ server.use(cors({
     methods:"GET,POST",
     allowedHeaders:"Content-Type, Authorization",
 }))
-server.use(express.json())
+server.use(express.json({limit:'50mb'}))
+server.use(express.urlencoded({limit:'50mb',extended:true}))
 
-server.use("/api/v1/users",UserRouter)
+server.use("/api/v1/users",UserRouter);
+server.use("/api/v1/products",ProductRouter);
 
 connectDb().then(() => {
     server.listen(process.env.PORT||8080, () => {
