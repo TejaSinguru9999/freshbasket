@@ -11,7 +11,7 @@ const Dashboard = () => {
   const getSellerProducts = async () => {
     try {
       setIsLoading(true)
-      const response = await fetch("http://localhost:8080/api/v1/products/getSellerProducts", {
+      const response = await fetch("https://freshbasket-server.vercel.app/api/v1/products/getSellerProducts", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"

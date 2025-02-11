@@ -67,7 +67,7 @@ const Cart = () => {
         })
         try {
             setLoading(true)
-            const response = await fetch("http://localhost:8080/api/v1/products/placeOrder",{
+            const response = await fetch("https://freshbasket-server.vercel.app/api/v1/products/placeOrder",{
                 method:"POST",
                 headers:{
                     "Content-Type":"application/json"

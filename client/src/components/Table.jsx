@@ -8,7 +8,7 @@ function Table({ data, seller }) {
     const handleUpdateStatus = async (productId, status) => {
         try {
             setLoading(productId)
-            const response = await fetch("http://localhost:8080/api/v1/products/updateStatus", {
+            const response = await fetch("https://freshbasket-server.vercel.app/api/v1/products/updateStatus", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"

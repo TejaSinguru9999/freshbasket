@@ -11,11 +11,11 @@ function Product({ title }) {
             setGettingProducts(true);
             let url = "";
             if (title?.toLowerCase().trim() === "local") {
-                url = `http://localhost:8080/api/v1/products/local/${user?.pincode}`
+                url = `https://freshbasket-server.vercel.app/api/v1/products/local/${user?.pincode}`
             } else if (title?.toLowerCase().trim() === "fresh") {
-                url = `http://localhost:8080/api/v1/products/fresh`
+                url = `https://freshbasket-server.vercel.app/api/v1/products/fresh`
             } else {
-                url = `http://localhost:8080/api/v1/products/farmer`
+                url = `https://freshbasket-server.vercel.app/api/v1/products/farmer`
             }
             const response = await fetch(url, {
                 method: "GET",
