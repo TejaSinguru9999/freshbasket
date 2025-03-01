@@ -8,7 +8,7 @@ function Orders() {
   const getMyOrders = async () => {
     try {
       setIsLoading(true)
-      const response = await fetch("http://localhost:8080/api/v1/products/getMyOrders", {
+      const response = await fetch("https://freshbasket1.vercel.app/api/v1/products/getMyOrders", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
