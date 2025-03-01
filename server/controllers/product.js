@@ -180,13 +180,15 @@ const getMyOrders=async(req,res)=>{
         const buyerProducts = await User.findById(buyerId).select("products");
         const orderPromises = buyerProducts.products.map((sellerId) =>
             User.findOne({ _id: sellerId}).select("products")
-        );
-        const orders = await Promise.all(orderPromises);
-        let finalOrders = []
-        const mapOnSellers = orders.map((seller,index)=>{
-            const filteredProducts = seller.products.filter(product=>product.buyer===buyerId);
-            finalOrders.push(...filteredProducts)
-        })
+    );
+    const orders = await Promise.all(orderPromises);
+    let finalOrders = []
+    const mapOnSellers = orders.map((seller,index)=>{
+        const filteredProducts = seller.products.filter(product=>product.buyer===buyerId);
+        console.log(filteredProducts.length)
+        finalOrders.push(...filteredProducts)
+    })
+    console.log("Final orders:",finalOrders.length)
         // const filteredProducts = orders.products.filter(product => product.buyer.toString() === buyerId);
         res.json({
             success:true,
