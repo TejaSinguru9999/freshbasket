@@ -3,13 +3,15 @@ import Spinner from './Spinner';
 import { Context } from '../context/Contextapi';
 
 function Product({ title }) {
-    const { user, cart, setCart, dummyProducts } = useContext(Context)
+    const { user, cart, setCart } = useContext(Context)
     const [gettingProducts, setGettingProducts] = useState(false);
     const [products, setProducts] = useState([]);
+
     const fetchProducts = async () => {
         try {
             setGettingProducts(true);
             let url = "";
+
             if (title?.toLowerCase().trim() === "local") {
                 url = `https://freshbasket-server.vercel.app/api/v1/products/local/${user?.pincode}`
             } else if (title?.toLowerCase().trim() === "fresh") {
@@ -17,81 +19,112 @@ function Product({ title }) {
             } else {
                 url = `https://freshbasket-server.vercel.app/api/v1/products/farmer`
             }
+
             const response = await fetch(url, {
                 method: "GET",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-            })
+                headers: { "Content-Type": "application/json" },
+            });
             const jsonResponse = await response.json();
-            if (!jsonResponse.success) {
-                throw new Error(jsonResponse.message)
-            }
-            console.log(jsonResponse.message)
-            setProducts(jsonResponse.message)
-        } catch (error) {
-            alert(error.message)
-        } finally {
-            setGettingProducts(false)
-        }
-    }
-    useEffect(() => {
-        fetchProducts();
-    }, [title])
 
-    const addToCart=(product)=>{
-        const existingProduct = cart.find(cartItem => cartItem._id===product._id)
-        if(existingProduct){
-            const newCart = cart.map(cartItem => cartItem._id === product._id ? { ...cartItem, quantity: cartItem.quantity + 1 } : cartItem)
-            setCart(newCart)
-        }else{
-            setCart(prev=>[...prev, {...product, quantity:1}])
+            if (!jsonResponse.success) throw new Error(jsonResponse.message);
+            setProducts(jsonResponse.message);
+        } catch (error) {
+            alert(error.message);
+        } finally {
+            setGettingProducts(false);
         }
-    }
-    return (<>
-        {
-            gettingProducts ?
-                <Spinner /> :
-                <>{products.length === 0 ? <>
-                    {title === "Fresh" && <p className='mt-[25vh] text-center text-xl'>No product was updated in last 24 hours. <br />Please visit again later.</p>}
-                    {title === "Local" && <p className='mt-[25vh] text-center text-xl'>No product was updated from your area pincode: {user.pincode}. <br />Please visit again later.</p>}
-                    {title === "Farmers" && <p className='mt-[25vh] text-center text-xl'>No product was updated from farmers. <br />Please visit again later.</p>}
-                </>
-                    :
-                    <div className='productsPageContainer w-full p-2'>
-                        {title === "Fresh" && <h2 className='text-center text-3xl font-semibold'>Find the <span className='text-green-500 text-5xl font-bold'>{title}</span> food items uploaded in last <span className='text-green-500 text-5xl font-bold'>24 hours</span></h2>}
-                        {title === "Local" && <h2 className='text-center text-3xl font-semibold'>Find the <span className='text-green-500 text-5xl font-bold'>{title}</span> food items around you...</h2>}
-                        {title === "Farmers" && <h2 className='text-center text-3xl font-semibold'>Searching for organic food?<br /><span className='text-green-500 text-5xl font-bold'>Get 100% natural food from {title}</span></h2>}
-                        <div className='productsContainer p-2 pt-5 w-full'>
-                            {products.map((product, index) => {
-                                return <div className='productContainer h-[28rem] overflow-hidden rounded-lg' key={index}>
-                                    <div className='productImgContainer overflow-hidden h-[60%]'>
-                                        <img className='w-full h-full object-cover' src={product.image} alt={product.image} />
-                                    </div>
-                                    <div className='flex'>
-                                        <div className='detailsContainer p-1 px-5 w-[60%]'>
-                                            <h3 className='text-green-700 text-xl my-2 font-bold'>{product.productName?.toUpperCase()}</h3>
-                                            <div className='vitaminsContainer flex my-2'>
-                                                <p>Vitamins: </p>
-                                                {product.vitamins.split(",").map((vitamin, vIndex) => <p key={vIndex} className='mx-1 px-1 rounded-sm bg-green-400 text-white'>{vitamin}</p>)}
-                                            </div>
-                                            <p className='my-2'>Carbohydrates: {product.carbohydrates} cal</p>
-                                            <p className='my-2'>Protien: {product.protein} gms</p>
-                                            <p className='my-2'>Fat: {product.fat} gms</p>
-                                        </div>
-                                        <div className='w-[40%] flex flex-col justify-center items-center gap-4'>
-                                            <p className='font-bold text-xl'>&#8377;{product.price}/{product.quantity}</p>
-                                            <button className='productBtn px-2 py-1 bg-green-500 w-[75%] rounded-full text-white hover:bg-green-600 active:bg-green-700' onClick={()=>addToCart(product)}>Add to cart</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            })}
+    };
+
+    useEffect(() => { fetchProducts(); }, [title]);
+
+    const addToCart = (product) => {
+        const existingProduct = cart.find(item => item._id === product._id);
+        if (existingProduct) {
+            const updatedCart = cart.map(item =>
+                item._id === product._id
+                    ? { ...item, quantity: item.quantity + 1 }
+                    : item
+            );
+            setCart(updatedCart);
+        } else {
+            setCart(prev => [...prev, { ...product, quantity: 1 }]);
+        }
+    };
+
+    return (
+        <>
+            {gettingProducts ? (
+                <Spinner />
+            ) : (
+                <>
+                    {products.length === 0 ? (
+                        <div className="mt-[25vh] text-center text-xl p-4">
+                            {title === "Fresh" && <>No product was updated in last 24 hours.<br />Please visit again later.</>}
+                            {title === "Local" && <>No product from your area (pincode: {user.pincode}).<br />Please visit again later.</>}
+                            {title === "Farmers" && <>No product from farmers.<br />Please visit again later.</>}
                         </div>
-                    </div>
-                }
+                    ) : (
+                        <div className="w-full p-4">
+                            <h2 className="text-center text-2xl md:text-3xl font-semibold mb-6">
+                                {title === "Fresh" && <>Find the <span className="text-green-500 font-bold text-4xl">Fresh</span> items uploaded in the last <span className="text-green-500 font-bold text-4xl">24 hours</span></>}
+                                {title === "Local" && <>Find the <span className="text-green-500 font-bold text-4xl">Local</span> food items around you</>}
+                                {title === "Farmers" && <>Searching for organic food?<br /><span className="text-green-500 font-bold text-4xl">Get 100% natural food from Farmers</span></>}
+                            </h2>
+
+                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                                {products.map((product, index) => (
+                                    <div
+                                        key={index}
+                                        className="rounded-lg shadow-md border bg-white overflow-hidden"
+                                    >
+                                        <div className="h-48 sm:h-60 md:h-64 overflow-hidden">
+                                            <img
+                                                src={product.image}
+                                                alt={product.productName}
+                                                className="w-full h-full object-cover"
+                                            />
+                                        </div>
+
+                                        <div className="p-4 flex flex-col justify-between h-full">
+                                            <h3 className="text-green-700 text-xl font-bold mb-2">{product.productName?.toUpperCase()}</h3>
+
+                                            <div className="flex flex-wrap gap-2 text-sm my-2">
+                                                <span className="font-medium">Vitamins:</span>
+                                                {product.vitamins.split(",").map((vitamin, vIndex) => (
+                                                    <span
+                                                        key={vIndex}
+                                                        className="bg-green-400 text-white px-2 py-0.5 rounded-full"
+                                                    >
+                                                        {vitamin}
+                                                    </span>
+                                                ))}
+                                            </div>
+
+                                            <p className="text-sm my-1">Carbs: {product.carbohydrates} cal</p>
+                                            <p className="text-sm my-1">Protein: {product.protein} g</p>
+                                            <p className="text-sm my-1">Fat: {product.fat} g</p>
+
+                                            <div className="mt-4 flex justify-between items-center">
+                                                <p className="font-bold text-lg">
+                                                    ₹{product.price}/{product.quantity}
+                                                </p>
+                                                <button
+                                                    onClick={() => addToCart(product)}
+                                                    className="bg-green-500 hover:bg-green-600 active:bg-green-700 text-white text-sm px-4 py-2 rounded-full"
+                                                >
+                                                    Add to Cart
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    )}
                 </>
-        }
-    </>)
+            )}
+        </>
+    );
 }
 
-export default Product
+export default Product;

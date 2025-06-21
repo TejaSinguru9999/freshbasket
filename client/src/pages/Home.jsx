@@ -1,49 +1,63 @@
-import React, { useContext } from 'react'
-import {Link} from "react-router-dom"
-import { Context } from '../context/Contextapi'
-function Hero() {
-  const {user} = useContext(Context)
-  return <div className='w-full h-[88vh] flex'>
-    <div className='textContainer w-[50%] h-full flex items-center justify-center flex-col px-4 bg-[#0f0f0f]'>
-      <h2 className='text-7xl font-bold text-green-700'>SAVE THE WORLD</h2>
-      <p className='text-4xl my-5 text-white'>Plant Trees In Your Surroundings...</p>
-      {user ? <div className='flex gap-5 my-5'>
-      <Link to="/fresh" className='bg-black border-white border-2 text-white hover:bg-white hover:text-black p-2 rounded-md'>Shop fresh</Link>
-      <Link to="/local" className='bg-black border-white border-2 text-white hover:bg-white hover:text-black p-2 rounded-md'>Shop from local</Link>
-      <Link to="/farmers" className='bg-black border-white border-2 text-white hover:bg-white hover:text-black p-2 rounded-md'>Shop from farmers</Link>
-        </div>
-      : <Link to="/auth" className='bg-white p-2 rounded-md'>Sign in now</Link> }
-      
-    </div>
-    <div className='imgContainer w-[50%] bg-[#0f0f0f]'>
-      <img className='heroImage w-full h-full' src='/assets/hero.jpg' alt='hero image' />
-    </div>
-  </div>
-}
+import React, { useContext } from 'react';
+import { Link } from "react-router-dom";
+import { Context } from '../context/Contextapi';
 
+function Hero() {
+  const { user } = useContext(Context);
+
+  return (
+    <div className="w-full flex flex-col md:flex-row">
+      {/* Text Container */}
+      <div className="w-full md:w-1/2 flex items-center justify-center flex-col px-4 py-10 bg-[#0f0f0f] text-center md:text-left">
+        <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold text-green-700">SAVE THE WORLD</h2>
+        <p className="text-xl md:text-3xl my-5 text-white">Plant Trees In Your Surroundings...</p>
+
+        {user ? (
+          <div className="flex flex-col sm:flex-row gap-4 my-5">
+            <Link to="/fresh" className="bg-black border-white border-2 text-white hover:bg-white hover:text-black px-4 py-2 rounded-md text-sm sm:text-base">Shop fresh</Link>
+            <Link to="/local" className="bg-black border-white border-2 text-white hover:bg-white hover:text-black px-4 py-2 rounded-md text-sm sm:text-base">Shop from local</Link>
+            <Link to="/farmers" className="bg-black border-white border-2 text-white hover:bg-white hover:text-black px-4 py-2 rounded-md text-sm sm:text-base">Shop from farmers</Link>
+          </div>
+        ) : (
+          <Link to="/auth" className="bg-white px-4 py-2 rounded-md text-black text-sm sm:text-base">Sign in now</Link>
+        )}
+      </div>
+
+      {/* Image Container */}
+      <div className="w-full md:w-1/2 h-64 md:h-auto bg-[#0f0f0f]">
+        <img src="/assets/hero.jpg" alt="hero image" className="w-full h-full object-cover" />
+      </div>
+    </div>
+  );
+}
 
 function Home() {
   return (
-    <div className='w-full'>
+    <div className="w-full">
       <Hero />
-      <div id='learn' className='w-full h-[88vh] p-5 pt-10'>
-        <h2 className='text-center text-3xl mb-4'>what is <span className='text-green-700 font-semibold'>FreshBasket</span> ?</h2>
-        <p className="text-xl text-gray-600 text-center mb-4">
+      <div id="learn" className="w-full px-4 py-10 bg-white">
+        <h2 className="text-center text-2xl sm:text-3xl mb-4">
+          What is <span className="text-green-700 font-semibold">FreshBasket</span>?
+        </h2>
+        <p className="text-base sm:text-lg text-gray-600 text-center mb-4">
           Welcome to <span className="text-green-700">FreshBasket</span>, your go-to platform for buying and selling <span className="text-green-700">fresh</span> and sustainable food directly from local farmers and communities.
         </p>
-        <div className="offerContainer p-6 bg-green-800 text-white rounded-lg shadow-lg">
-          <h2 className="text-2xl font-semibold text-center mb-4">What We Offer ?</h2>
-          <p className="my-7 text-xl">&#183; Fresh, locally sourced produce directly from farmers and community sellers.</p>
-          <p className="my-7 text-xl">&#183; Eco-friendly approach with reduced food waste and sustainable farming practices.</p>
-          <p className="my-7 text-xl">&#183; Support for local farmers and individuals, fostering a community of fresh food suppliers.</p>
-          <p className="my-7 text-xl">&#183; A simple and convenient platform to buy and sell fresh food from your neighborhood.</p>
-          <p className="my-7 text-xl">&#183; Seasonal produce, ensuring you get the freshest items available in your area.</p>
-          <p className="my-7 text-xl">&#183; Zero packaging waste, encouraging sustainable food consumption habits.</p>
-          <p className="my-7 text-xl">&#183; Affordable options for everyone, helping make fresh, healthy food accessible to all.</p>
+
+        <div className="offerContainer p-4 sm:p-6 bg-green-800 text-white rounded-lg shadow-lg">
+          <h2 className="text-xl sm:text-2xl font-semibold text-center mb-4">What We Offer ?</h2>
+          <ul className="space-y-4 text-base sm:text-xl list-disc pl-5">
+            <li>Fresh, locally sourced produce directly from farmers and community sellers.</li>
+            <li>Eco-friendly approach with reduced food waste and sustainable farming practices.</li>
+            <li>Support for local farmers and individuals, fostering a community of fresh food suppliers.</li>
+            <li>A simple and convenient platform to buy and sell fresh food from your neighborhood.</li>
+            <li>Seasonal produce, ensuring you get the freshest items available in your area.</li>
+            <li>Zero packaging waste, encouraging sustainable food consumption habits.</li>
+            <li>Affordable options for everyone, helping make fresh, healthy food accessible to all.</li>
+          </ul>
         </div>
       </div>
     </div>
-  )
+  );
 }
 
-export default Home
+export default Home;
