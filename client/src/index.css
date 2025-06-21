@@ -2,101 +2,60 @@
 @tailwind components;
 @tailwind utilities;
 
-*{
-  scroll-behavior: smooth;
-}
-.active {
-  background-color: #15803d;
-  color: #fff;
-  border-radius: 0.25rem;
+/* ✅ Prevent horizontal scroll */
+html, body {
+  width: 100%;
+  overflow-x: hidden;
 }
 
-.authContainer {
-  background-image: url("/assets/authBg.jpg");
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: bottom;
-}
-@keyframes heroTxtRight {
-  0% {
-    transform: translate(-50%);
-    opacity: 0;
-  }
-  100% {
-    transform: translate(0%);
-    opacity: 1;
-  }
-}
-.textContainer h2, .textContainer p, .textContainer a{
-  animation: heroTxtRight 2s;
-}
-@keyframes learnBtn{
-  0%{
-    opacity: 0;
-  }
-  100%{
-    opacity: 1;
-  }
-}
-.textContainer a{
-  animation: learnBtn 6s;
-}
-.authCard {
-background: rgba(255, 255, 255, 0.01);
-border-radius: 16px;
-backdrop-filter: blur(6.4px);
--webkit-backdrop-filter: blur(6.4px);
-box-shadow: 0 8px 32px 0 rgba(45, 45, 46, 0.842);
-}
-
-@keyframes heroImageFade {
-  0%{
-    opacity: 0.7;
-    scale: 0.8;
-  }
-  100%{
-    opacity: 1;
-    scale: 1;
-  }
-}
-.imgContainer .heroImage{
-  animation: heroImageFade 2s;
-}
-.productsContainer{
+/* ✅ Responsive product grid */
+.productsContainer {
   display: grid;
-    gap: 2.5rem;
-    grid-template-columns: repeat(auto-fill, minmax(23rem, 1fr));
-}
-.productContainer{
-  box-shadow: rgba(255, 255, 255, 0.1) 0px 1px 1px 0px inset, rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
-}
-.productImgContainer img {
-  transition: all linear 0.3s;
-  transform: scale(1);
-}
-.productImgContainer:hover img {
-  transform: scale(1.1);
-}
-.offerContainer{
-  background-image: url("/assets/homeBasket.png");
-  background-repeat: no-repeat;
-  background-position: right;
-}
-.boxShadow{
-  box-shadow: 0px 0px 1rem rgb(0,0,0,0.3);
-}
-@keyframes l1 {to{transform: rotate(.5turn)}}
-.loader {
-  display: block;
-  margin:1rem auto;
-  width: 50px;
-  aspect-ratio: 1;
-  border-radius: 50%;
-  border: 8px solid;
-  border-color: #15803d #0000;
-  animation: l1 1s infinite;
+  gap: 2rem;
+  grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+  padding: 1rem;
 }
 
-.productBtn:active{
-  scale: 1.1;
+/* ✅ Auth form layout improvements */
+.authContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-width: 25rem;
+  width: 90%;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: white;
+  border-radius: 1rem;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* ✅ Responsive image container and hero image */
+.imgContainer {
+  width: 100%;
+  height: auto;
+  max-height: 100%;
+  overflow: hidden;
+}
+
+.heroImage {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+/* Optional: fix for cart icon overlap */
+.cart-icon-wrapper {
+  position: relative;
+}
+
+.cart-badge {
+  position: absolute;
+  top: -0.75rem;
+  right: -0.75rem;
+  background-color: #15803d; /* Tailwind green-700 */
+  color: white;
+  font-size: 0.75rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 9999px;
 }
