@@ -1,6 +1,22 @@
 import React, { useContext } from 'react';
 import { Link } from "react-router-dom";
 import { Context } from '../context/Contextapi';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
+
+function HeroSlider() {
+  return (
+    <Swiper
+      loop={true}
+      autoplay={{ delay: 3000 }}
+      className="w-full h-64 md:h-[500px]"
+    >
+      <SwiperSlide><img src="/assets/hero1.jpg" alt="Slide 1" className="w-full h-full object-cover" /></SwiperSlide>
+      <SwiperSlide><img src="/assets/hero2.jpg" alt="Slide 2" className="w-full h-full object-cover" /></SwiperSlide>
+      <SwiperSlide><img src="/assets/hero3.jpg" alt="Slide 3" className="w-full h-full object-cover" /></SwiperSlide>
+    </Swiper>
+  );
+}
 
 function Hero() {
   const { user } = useContext(Context);
@@ -23,9 +39,9 @@ function Hero() {
         )}
       </div>
 
-      {/* Image Container */}
+      {/* Carousel Container */}
       <div className="w-full md:w-1/2 h-64 md:h-auto bg-[#0f0f0f]">
-        <img src="/assets/hero.jpg" alt="hero image" className="w-full h-full object-cover" />
+        <HeroSlider />
       </div>
     </div>
   );
